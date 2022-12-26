@@ -6,4 +6,8 @@
     <color name="sky_blue_1">#98C8D6</color>
     <color name="sky_blue_2">#3B9EC1</color>
     <color name="sky_blue_dark">#178CB2</color>
+    <color name="gray_light">#F7F7F7</color>
+    <color name="gray">#E7E8E9</color>
+    <color name="text_color">#9F9F9F</color>
+    <color name="text_trans_color">#A6FFFFFF</color>
 </resources>
