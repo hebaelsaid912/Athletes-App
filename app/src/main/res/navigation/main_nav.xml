@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.hebaelsaid.android.athletesapp.ui.feature.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeListFragment"
+            app:destination="@id/homeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeListFragment"
+        android:name="com.hebaelsaid.android.athletesapp.ui.feature.homelist.HomeListFragment"
+        tools:layout="@layout/fragment_home_list"
+        android:label="HomeListFragment" >
+        <action
+            android:id="@+id/action_homeListFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.hebaelsaid.android.athletesapp.ui.feature.detail.DetailsFragment"
+        tools:layout="@layout/fragment_details"
+        android:label="DetailsFragment" />
+</navigation>
