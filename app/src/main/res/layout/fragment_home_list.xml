@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray_light"
         tools:context=".ui.feature.homelist.HomeListFragment">
         <TextView
             android:id="@+id/textView2"
@@ -20,7 +21,7 @@
             android:paddingEnd="@dimen/_15sdp"
             android:paddingBottom="@dimen/_15sdp"
             android:text="@string/most_popular"
-            android:textColor="@color/text_color"
+            android:textColor="@color/sky_blue_dark"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
