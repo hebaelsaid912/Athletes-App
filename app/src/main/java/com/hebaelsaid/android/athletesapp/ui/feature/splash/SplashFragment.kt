@@ -1,5 +1,6 @@
 package com.hebaelsaid.android.athletesapp.ui.feature.splash
 
+
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -10,10 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.hebaelsaid.android.athletesapp.databinding.FragmentSplashBinding
+import com.hebaelsaid.android.athletesapp.ui.MainViewModel
 import com.hebaelsaid.android.athletesapp.utils.ConnectivityReceiver
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +23,10 @@ private const val TAG = "SplashFragment"
 @AndroidEntryPoint
 class SplashFragment : Fragment(), ConnectivityReceiver.ConnectivityReceiverListener{
     private lateinit var binding: FragmentSplashBinding
-    private val viewModel:SplashViewModel by viewModels()
+    private var isConnected:Boolean = false
+    private val viewModel:MainViewModel by lazy {
+        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +45,19 @@ class SplashFragment : Fragment(), ConnectivityReceiver.ConnectivityReceiverList
         lifecycleScope.launchWhenCreated {
             viewModel.athletesListState.collect { state ->
                 when(state){
-                    is SplashViewModel.AthletesListState.Success -> {
+                    is MainViewModel.AthletesListState.Success -> {
                         Log.d(TAG, "renderAthletesListData: Success")
-                        Log.d(TAG, "renderAthletesListData: list size ${state.athletesListResponseModel.athletes?.size}")
+                        Log.d(TAG, "renderAthletesListData: list size ${state.message}")
                         setUpSplashHandler()
                     }
-                    is SplashViewModel.AthletesListState.Error -> {
+                    is MainViewModel.AthletesListState.Error -> {
                         Log.d(TAG, "renderAthletesListData: Error ${state.message}")
+                        setUpSplashHandler()
                     }
-                    is SplashViewModel.AthletesListState.Loading -> {
+                    is MainViewModel.AthletesListState.Loading -> {
                         Log.d(TAG, "renderAthletesListData: Loading")
                     }
-                    is SplashViewModel.AthletesListState.Idle -> {
+                    is MainViewModel.AthletesListState.Idle -> {
                         Log.d(TAG, "renderAthletesListData: Idle")
                     }
                 }
@@ -60,20 +66,12 @@ class SplashFragment : Fragment(), ConnectivityReceiver.ConnectivityReceiverList
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
-        showNetworkMessage(isConnected)
+        this.isConnected = isConnected
     }
     override fun onResume() {
         super.onResume()
         ConnectivityReceiver.connectivityReceiverListener = this
     }
-    private fun showNetworkMessage(isConnected: Boolean) {
-        if (!isConnected) {
-            setUpSplashHandler()
-        } else {
-            viewModel.getAthletesList()
-        }
-    }
-
     private fun setUpSplashHandler() {
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeListFragment())

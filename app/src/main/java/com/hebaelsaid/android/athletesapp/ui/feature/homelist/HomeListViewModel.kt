@@ -27,10 +27,7 @@ class HomeListViewModel @Inject constructor(
         class Loading(val isLoading: Boolean) : AthletesListState()
         object Idle : AthletesListState()
     }
-    init {
-        getAthletesList()
-    }
-    private fun getAthletesList() {
+     fun getAthletesList() {
         useCase().onEach { resultState ->
             when (resultState) {
                 is Resource.Success -> {
