@@ -26,10 +26,7 @@ class SplashViewModel @Inject constructor( private val athletesApiUseCase: Athle
         class Loading(val isLoading: Boolean) : AthletesListState()
         object Idle : AthletesListState()
     }
-    init {
-        getAthletesList()
-    }
-    private fun getAthletesList() {
+     fun getAthletesList() {
         athletesApiUseCase().onEach { resultState ->
             when (resultState) {
                 is Resource.Success -> {

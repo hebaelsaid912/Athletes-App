@@ -1,5 +1,6 @@
 package com.hebaelsaid.android.athletesapp.domain.usecase
 
+import android.util.Log
 import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
 import com.hebaelsaid.android.athletesapp.data.model.AthletesListResponseModel
 import com.hebaelsaid.android.athletesapp.domain.repository.AthletesApiRepo
@@ -11,7 +12,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-
+private const val TAG = "AthletesApiUseCase"
 class AthletesApiUseCase @Inject constructor(
     private val athletesApiRepo: AthletesApiRepo,
     private val athletesDBRepo: AthletesDBRepo
@@ -20,6 +21,7 @@ class AthletesApiUseCase @Inject constructor(
         try {
             emit(Resource.Loading<AthletesListResponseModel>())
             val athletesModel = athletesApiRepo.getAthletesList()
+            Log.d(TAG, "invoke: ${athletesModel.athletes?.size}")
             cashingAthletesIntoDB(athletesModel)
             if (athletesModel != null) {
                 emit(Resource.Success<AthletesListResponseModel>(data = athletesModel))

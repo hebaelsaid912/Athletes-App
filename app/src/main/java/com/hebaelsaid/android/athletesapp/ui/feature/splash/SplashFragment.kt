@@ -1,5 +1,7 @@
 package com.hebaelsaid.android.athletesapp.ui.feature.splash
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,11 +14,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.hebaelsaid.android.athletesapp.databinding.FragmentSplashBinding
+import com.hebaelsaid.android.athletesapp.utils.ConnectivityReceiver
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "SplashFragment"
 @AndroidEntryPoint
-class SplashFragment : Fragment() {
+class SplashFragment : Fragment(), ConnectivityReceiver.ConnectivityReceiverListener{
     private lateinit var binding: FragmentSplashBinding
     private val viewModel:SplashViewModel by viewModels()
     override fun onCreateView(
@@ -24,15 +27,13 @@ class SplashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSplashBinding.inflate(inflater, container, false)
+        requireActivity().registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            renderAthletesListData()
-        }, 3000)
+        renderAthletesListData()
     }
 
     private fun renderAthletesListData() {
@@ -42,7 +43,7 @@ class SplashFragment : Fragment() {
                     is SplashViewModel.AthletesListState.Success -> {
                         Log.d(TAG, "renderAthletesListData: Success")
                         Log.d(TAG, "renderAthletesListData: list size ${state.athletesListResponseModel.athletes?.size}")
-                        findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeListFragment())
+                        setUpSplashHandler()
                     }
                     is SplashViewModel.AthletesListState.Error -> {
                         Log.d(TAG, "renderAthletesListData: Error ${state.message}")
@@ -56,6 +57,27 @@ class SplashFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        showNetworkMessage(isConnected)
+    }
+    override fun onResume() {
+        super.onResume()
+        ConnectivityReceiver.connectivityReceiverListener = this
+    }
+    private fun showNetworkMessage(isConnected: Boolean) {
+        if (!isConnected) {
+            setUpSplashHandler()
+        } else {
+            viewModel.getAthletesList()
+        }
+    }
+
+    private fun setUpSplashHandler() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeListFragment())
+        }, 3000)
     }
 
 }
