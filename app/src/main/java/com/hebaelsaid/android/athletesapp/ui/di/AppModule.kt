@@ -1,5 +1,8 @@
 package com.hebaelsaid.android.athletesapp.ui.di
 
+import android.content.Context
+import androidx.room.Room
+import com.hebaelsaid.android.athletesapp.data.local.database.AthletesDatabase
 import com.hebaelsaid.android.athletesapp.data.remote.AthletesApiInterface
 import com.hebaelsaid.android.athletesapp.data.repository.AthletesApiRepoImpl
 import com.hebaelsaid.android.athletesapp.domain.repository.AthletesApiRepo
@@ -8,6 +11,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,12 +22,20 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideCoffeeApiInterface(): AthletesApiInterface {
+    fun provideAthletesApiInterface(): AthletesApiInterface {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AthletesApiInterface::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideAthletesDatabase(@ApplicationContext appContext: Context): AthletesDatabase {
+        return Room.databaseBuilder(
+            appContext, AthletesDatabase::class.java,
+            "athletes.db"
+        ).build()
     }
 }
 
@@ -32,5 +44,5 @@ object AppModule {
 abstract class DataPort{
     @Binds
     @Singleton
-    abstract fun bindCoffeeMenuRepo( impl: AthletesApiRepoImpl):AthletesApiRepo
+    abstract fun bindAthletesMenuRepo( impl: AthletesApiRepoImpl):AthletesApiRepo
 }
