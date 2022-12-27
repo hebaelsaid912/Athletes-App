@@ -31,5 +31,9 @@
         android:id="@+id/detailsFragment"
         android:name="com.hebaelsaid.android.athletesapp.ui.feature.detail.DetailsFragment"
         tools:layout="@layout/fragment_details"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+        <argument
+            android:name="athlete_id"
+            app:argType="string"/>
+    </fragment>
 </navigation>
