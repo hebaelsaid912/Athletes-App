@@ -1,4 +1,4 @@
-package com.hebaelsaid.android.athletesapp.ui.di
+package com.hebaelsaid.android.athletesapp
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -11,7 +11,7 @@ interface AthletesDAO {
     @get:Query("SELECT * FROM athletes ORDER BY _id DESC")
     val getAllAthletesList:List<AthleteItemModel>
     @Query("SELECT * FROM athletes WHERE _id =:id")
-    suspend fun getAthleteDetailsByName(id:Int):AthleteItemModel
+    suspend fun getAthleteDetailsById(id:Int):AthleteItemModel
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAthleteItem(athleteItem: AthleteItemModel)
     @Query("DELETE  FROM athletes")
