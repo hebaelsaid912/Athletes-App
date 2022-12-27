@@ -1,10 +1,10 @@
-package com.hebaelsaid.android.athletesapp.ui.feature.homelist
+package com.hebaelsaid.android.athletesapp.ui.feature.splash
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
-import com.hebaelsaid.android.athletesapp.domain.usecase.AthletesDBUseCase
+import com.hebaelsaid.android.athletesapp.data.model.AthletesListResponseModel
+import com.hebaelsaid.android.athletesapp.domain.usecase.AthletesApiUseCase
 import com.hebaelsaid.android.athletesapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,16 +13,15 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-private const val TAG = "HomeListViewModel"
+private const val TAG = "SplashViewModel"
 @HiltViewModel
-class HomeListViewModel @Inject constructor(
-    private val useCase: AthletesDBUseCase
-) : ViewModel(){
+class SplashViewModel @Inject constructor( private val athletesApiUseCase: AthletesApiUseCase)  : ViewModel(){
+
     private val _athletesListState = MutableStateFlow<AthletesListState>(AthletesListState.Idle)
     val athletesListState: StateFlow<AthletesListState> get() = _athletesListState
 
     sealed class AthletesListState {
-        data class Success(var athletesListResponseModel: List<AthleteItemModel>) : AthletesListState()
+        data class Success(var athletesListResponseModel: AthletesListResponseModel) : AthletesListState()
         data class Error(val message: String) : AthletesListState()
         class Loading(val isLoading: Boolean) : AthletesListState()
         object Idle : AthletesListState()
@@ -31,7 +30,7 @@ class HomeListViewModel @Inject constructor(
         getAthletesList()
     }
     private fun getAthletesList() {
-        useCase().onEach { resultState ->
+        athletesApiUseCase().onEach { resultState ->
             when (resultState) {
                 is Resource.Success -> {
                     _athletesListState.value = AthletesListState.Success(athletesListResponseModel = resultState.data!!)

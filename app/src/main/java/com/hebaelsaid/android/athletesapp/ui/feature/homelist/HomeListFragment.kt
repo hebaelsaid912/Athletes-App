@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.hebaelsaid.android.athletesapp.data.model.AthletesListResponseModel
+import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
 import com.hebaelsaid.android.athletesapp.databinding.FragmentHomeListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,8 +36,8 @@ class HomeListFragment : Fragment() , AthletesListAdapter.AthletesListViewHolder
                 when(state){
                     is HomeListViewModel.AthletesListState.Success -> {
                         Log.d(TAG, "renderProductListData: Success")
-                        Log.d(TAG, "renderProductListData: list size ${state.athletesListResponseModel.athletes?.size}")
-                        setUpAthletesList(state.athletesListResponseModel.athletes)
+                        Log.d(TAG, "renderProductListData: list size ${state.athletesListResponseModel.size}")
+                        setUpAthletesList(state.athletesListResponseModel)
                     }
                     is HomeListViewModel.AthletesListState.Error -> {
                         Log.d(TAG, "renderProductListData: Error ${state.message}")
@@ -53,7 +53,7 @@ class HomeListFragment : Fragment() , AthletesListAdapter.AthletesListViewHolder
         }
     }
 
-    private fun setUpAthletesList(athletes: List<AthletesListResponseModel.Athlete?>?) {
+    private fun setUpAthletesList(athletes: List<AthleteItemModel>) {
         val adapter = AthletesListAdapter(this)
         adapter.submitList(athletes)
         binding.homeItemRv.adapter = adapter

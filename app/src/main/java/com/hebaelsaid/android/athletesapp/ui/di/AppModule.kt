@@ -5,9 +5,9 @@ import androidx.room.Room
 import com.hebaelsaid.android.athletesapp.data.local.database.AthletesDatabase
 import com.hebaelsaid.android.athletesapp.data.remote.AthletesApiInterface
 import com.hebaelsaid.android.athletesapp.data.repository.AthletesApiRepoImpl
-import com.hebaelsaid.android.athletesapp.data.repository.AthletesRepoImpl
+import com.hebaelsaid.android.athletesapp.data.repository.AthletesDBRepoImpl
 import com.hebaelsaid.android.athletesapp.domain.repository.AthletesApiRepo
-import com.hebaelsaid.android.athletesapp.domain.repository.AthletesRepo
+import com.hebaelsaid.android.athletesapp.domain.repository.AthletesDBRepo
 import com.hebaelsaid.android.athletesapp.utils.Constants.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -49,5 +49,5 @@ abstract class DataPort{
     abstract fun bindAthletesApiRepo( impl: AthletesApiRepoImpl):AthletesApiRepo
     @Binds
     @Singleton
-    abstract fun bindAthletesRepo( impl: AthletesRepoImpl):AthletesRepo
+    abstract fun bindAthletesRepo( impl: AthletesDBRepoImpl):AthletesDBRepo
 }

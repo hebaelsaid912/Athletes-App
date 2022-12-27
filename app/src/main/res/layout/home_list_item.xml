@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.hebaelsaid.android.athletesapp.data.model.AthletesListResponseModel.Athlete" />
+            type="com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

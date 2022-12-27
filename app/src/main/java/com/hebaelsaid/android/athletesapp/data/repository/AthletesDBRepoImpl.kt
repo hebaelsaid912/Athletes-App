@@ -2,10 +2,10 @@ package com.hebaelsaid.android.athletesapp.data.repository
 
 import com.hebaelsaid.android.athletesapp.data.local.database.AthletesDatabase
 import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
-import com.hebaelsaid.android.athletesapp.domain.repository.AthletesRepo
+import com.hebaelsaid.android.athletesapp.domain.repository.AthletesDBRepo
 import javax.inject.Inject
 
-class AthletesRepoImpl @Inject constructor( private val database: AthletesDatabase) : AthletesRepo {
+class AthletesDBRepoImpl @Inject constructor(private val database: AthletesDatabase) : AthletesDBRepo {
     override suspend fun getAllAthletesList(): List<AthleteItemModel> {
         return database.athletesDao().getAllAthletesList
     }

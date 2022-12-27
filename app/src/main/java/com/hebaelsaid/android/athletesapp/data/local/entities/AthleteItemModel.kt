@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "athletes")
 data class AthleteItemModel(
     @PrimaryKey(autoGenerate = true)
-    val _id:Int,
+    val _id:Int?=null,
     @ColumnInfo(name = "athlete_brief")
     val brief: String?,
     @ColumnInfo(name = "athlete_image")

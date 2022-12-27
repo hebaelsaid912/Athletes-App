@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.hebaelsaid.android.athletesapp.BR
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hebaelsaid.android.athletesapp.data.model.AthletesListResponseModel
+import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
 import com.hebaelsaid.android.athletesapp.databinding.HomeListItemBinding
 
 private const val TAG = "AthletesListAdapter"
 class AthletesListAdapter(private val onItemClickListener: AthletesListViewHolder.OnItemClickListener) :
-    ListAdapter<AthletesListResponseModel.Athlete, AthletesListAdapter.AthletesListViewHolder>(
+    ListAdapter<AthleteItemModel, AthletesListAdapter.AthletesListViewHolder>(
         AthletessModelDiffCallback()
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AthletesListViewHolder {
@@ -23,17 +23,17 @@ class AthletesListAdapter(private val onItemClickListener: AthletesListViewHolde
     }
 
     class AthletessModelDiffCallback :
-        DiffUtil.ItemCallback<AthletesListResponseModel.Athlete>() {
+        DiffUtil.ItemCallback<AthleteItemModel>() {
         override fun areItemsTheSame(
-            oldItem: AthletesListResponseModel.Athlete,
-            newItem: AthletesListResponseModel.Athlete
+            oldItem: AthleteItemModel,
+            newItem: AthleteItemModel
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: AthletesListResponseModel.Athlete,
-            newItem: AthletesListResponseModel.Athlete
+            oldItem: AthleteItemModel,
+            newItem: AthleteItemModel
         ): Boolean {
             return oldItem == newItem
         }
@@ -55,7 +55,7 @@ class AthletesListAdapter(private val onItemClickListener: AthletesListViewHolde
         }
 
         fun bind(
-            obj: AthletesListResponseModel.Athlete,
+            obj: AthleteItemModel,
             onItemClickListener: OnItemClickListener
         ) {
             binding.setVariable(BR.model, obj)
