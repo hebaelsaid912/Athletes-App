@@ -6,6 +6,7 @@ import com.hebaelsaid.android.athletesapp.data.local.database.AthletesDatabase
 import com.hebaelsaid.android.athletesapp.data.remote.AthletesApiInterface
 import com.hebaelsaid.android.athletesapp.data.repository.AthletesApiRepoImpl
 import com.hebaelsaid.android.athletesapp.domain.repository.AthletesApiRepo
+import com.hebaelsaid.android.athletesapp.domain.repository.AthletesRepo
 import com.hebaelsaid.android.athletesapp.utils.Constants.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -45,4 +46,7 @@ abstract class DataPort{
     @Binds
     @Singleton
     abstract fun bindAthletesMenuRepo( impl: AthletesApiRepoImpl):AthletesApiRepo
+    @Binds
+    @Singleton
+    abstract fun bindAthletesRepo( impl: AthletesApiRepoImpl):AthletesRepo
 }
