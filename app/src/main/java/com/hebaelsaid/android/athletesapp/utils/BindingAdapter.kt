@@ -10,6 +10,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.hebaelsaid.android.athletesapp.R
 
 
 @BindingAdapter("android:bindImgUrl", "android:bindProgressItem")
@@ -41,5 +42,6 @@ fun setGlideImageUrl(
                 return false
             }
         })
+        .placeholder(R.drawable.athlete)
         .into(image)
 }
