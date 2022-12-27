@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.hebaelsaid.android.athletesapp.data.local.entities.AthleteItemModel
 import com.hebaelsaid.android.athletesapp.databinding.FragmentHomeListBinding
 import com.hebaelsaid.android.athletesapp.ui.MainViewModel
@@ -118,7 +119,7 @@ class HomeListFragment : Fragment(), AthletesListAdapter.AthletesListViewHolder.
     }
 
     override fun onItemClick(AthletesId: Int?) {
-        TODO("Not yet implemented")
+        findNavController().navigate(HomeListFragmentDirections.actionHomeListFragmentToDetailsFragment(athleteId = AthletesId.toString()))
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {

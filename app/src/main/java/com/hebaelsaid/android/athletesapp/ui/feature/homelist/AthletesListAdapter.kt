@@ -61,7 +61,7 @@ class AthletesListAdapter(private val onItemClickListener: AthletesListViewHolde
             binding.setVariable(BR.model, obj)
             binding.executePendingBindings()
             itemView.setOnClickListener {
-               // onItemClickListener.onItemClick(obj)
+                onItemClickListener.onItemClick(obj._id)
             }
         }
 
